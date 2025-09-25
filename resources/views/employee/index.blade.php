@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('../component/master')
+@section('title', 'Daftar Pegawai')
+@section('content')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body>
     <div class="w-screen h-screen border-2 border-black flex flex-col justify-center items-center">
         <h1 class="mb-[50px] text-[50px]">Daftar Pegawai</h1>
         <table border="1" cellpadding="5" cellspacing="0">
@@ -41,8 +34,7 @@
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"
-                                    onclick="return confirm('Yakin ingin menghapus?')">Delete</button>
+                                <button type="submit" onclick="return confirm('Yakin ingin menghapus?')">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -50,6 +42,5 @@
             </tbody>
         </table>
     </div>
-</body>
 
-</html>
+@endsection
