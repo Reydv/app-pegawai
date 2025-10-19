@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('alamat');
             $table->date('tanggal_masuk');
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
+            // $table->foreignId('departments_id')->constrained('departments');
+            // $table->foreignId('jabatan_id')->constrained('positions'); // nama dari design table
             $table->timestamps();
         });
     }
