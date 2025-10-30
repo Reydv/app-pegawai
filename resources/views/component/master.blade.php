@@ -5,28 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>@yield('title', 'App Pegawai')</title>
 </head>
 
-<body>
+<body class="bg-[#fcfaf8]">
     <header>
-        <h1>@yield('page-title', 'App Pegawai')</h1>
-        <nav>
-            <ul>
-                <li><a href="{{ url('/employee') }}">Employee</a></li>
-                <li><a href="{{ url('/department') }}">Department</a></li>
-                <li><a href="{{ url('/attendance') }}">Attendance</a></li>
-                <li><a href="{{ url('/report') }}">Report</a></li>
-                <li><a href="{{ url('/settings') }}">Settings</a></li>
-            </ul>
+        <nav class="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
+            <div class="container mx-auto flex justify-between items-center p-4 relative">
+                <a href="#" class="text-xl font-semibold text-gray-800">MyKantor</a>
+
+                <a href="{{ route('home') }}"
+                    class="absolute left-1/2 -translate-x-1/2 text-3xl font-bold text-gray-700 hover:text-gray-900 transition-all">
+                    → KEMBALI KE DASHBOARD ←
+                </a>
+            </div>
         </nav>
-        <main>
+
+
+        <main class="bg-[#fcfaf8]">
             @yield('content')
         </main>
     </header>
-    <footer>
+
+    {{-- <footer>
         <p>&copy; {{ date('Y') }} App Pegawai</p>
-    </footer>
+    </footer> --}}
 </body>
 
 </html>

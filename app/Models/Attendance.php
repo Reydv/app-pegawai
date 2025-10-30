@@ -10,11 +10,10 @@ class Attendance extends Model
 
     protected $fillable = [
         'karyawan_id',
-        'bulan',
-        'gaji_pokok',
-        'tunjangan',
-        'potongan',
-        'total_gaji',
+        'tanggal',
+        'waktu_masuk',
+        'waktu_keluar',
+        'status_absensi',
     ];
 
     public function employee()

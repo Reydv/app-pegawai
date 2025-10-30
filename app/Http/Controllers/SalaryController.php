@@ -10,14 +10,9 @@ class SalaryController extends Controller
 {
     public function index()
     {
-        $salaries = Salary::with('employee')->latest()->get();
-        return view('salaries.index', compact('salaries'));
-    }
-
-    public function create()
-    {
         $employees = Employee::all();
-        return view('salaries.create', compact('employees'));
+        $salaries = Salary::with('employee')->latest()->get();
+        return view('page-branch.salary', compact('salaries', 'employees'));
     }
 
     public function store(Request $request)
@@ -36,19 +31,7 @@ class SalaryController extends Controller
 
         Salary::create($validated);
 
-        return redirect()->route('salaries.index')->with('success', '');
-    }
-
-    public function show(Salary $salary)
-    {
-        $salary->load('employee');
-        return view('salaries.show', compact('salary'));
-    }
-
-    public function edit(Salary $salary)
-    {
-        $employees = Employee::all();
-        return view('salaries.edit', compact('salary', 'employees'));
+        return redirect()->back();
     }
 
     public function update(Request $request, Salary $salary)
@@ -67,12 +50,12 @@ class SalaryController extends Controller
 
         $salary->update($validated);
 
-        return redirect()->route('salaries.index')->with('success', '');
+        return redirect()->back();
     }
 
     public function destroy(Salary $salary)
     {
         $salary->delete();
-        return redirect()->route('salaries.index')->with('success', '');
+        return redirect()->back();
     }
 }

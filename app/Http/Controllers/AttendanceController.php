@@ -10,8 +10,9 @@ class AttendanceController extends Controller
 {
     public function index()
     {
+        $employees = Employee::all();
         $attendances = Attendance::with('employee')->get();
-        return view('attendances.index', compact('attendances'));
+        return view('page-branch.attendance', compact('attendances', 'employees'));
     }
 
     public function create()
@@ -22,48 +23,41 @@ class AttendanceController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'karyawan_id' => 'required|exists:employees,id',
-            'bulan' => 'required|string|max:10',
-            'gaji_pokok' => 'required|numeric',
-            'tunjangan' => 'nullable|numeric',
-            'potongan' => 'nullable|numeric',
-            'total_gaji' => 'required|numeric',
+            'tanggal' => 'required|date',
+            'waktu_masuk' => 'nullable|date_format:H:i',
+            'waktu_keluar' => 'nullable|date_format:H:i|after:waktu_masuk',
+            'status_absensi' => 'required|in:hadir,izin,sakit,alpha',
         ]);
 
         Attendance::create($validated);
-        return redirect()->route('attendances.index')->with('success', 'Attendance created successfully.');
+        return redirect()->back();
     }
 
-    public function show(Attendance $attendance)
-    {
-        return view('attendances.show', compact('attendance'));
-    }
-
-    public function edit(Attendance $attendance)
-    {
-        $employees = Employee::all();
-        return view('attendances.edit', compact('attendance', 'employees'));
-    }
+    // ...
 
     public function update(Request $request, Attendance $attendance)
     {
         $validated = $request->validate([
             'karyawan_id' => 'sometimes|required|exists:employees,id',
-            'bulan' => 'sometimes|required|string|max:10',
-            'gaji_pokok' => 'sometimes|required|numeric',
-            'tunjangan' => 'nullable|numeric',
-            'potongan' => 'nullable|numeric',
-            'total_gaji' => 'sometimes|required|numeric',
+            'tanggal' => 'sometimes|required|date',
+            'waktu_masuk' => 'nullable|date_format:H:i',
+            'waktu_keluar' => 'nullable|date_format:H:i|after:waktu_masuk',
+            'status_absensi' => 'sometimes|required|in:hadir,izin,sakit,alpha',
         ]);
 
         $attendance->update($validated);
-        return redirect()->route('attendances.index')->with('success', 'Attendance updated successfully.');
+        return redirect()->route('attendances.index', [
+            'selected_id' => $attendance->id,
+            'tanggal' => $validated['tanggal'] ?? $attendance->tanggal
+        ])->with('success', 'Absensi berhasil diperbarui.');
     }
 
     public function destroy(Attendance $attendance)
     {
         $attendance->delete();
-        return redirect()->route('attendances.index')->with('success', 'Attendance deleted successfully.');
+        return redirect()->back();
     }
 }

@@ -7,17 +7,11 @@ use Illuminate\Http\Request;
 
 class PositionController extends Controller
 {
-    public function index()
-    {
-        $positions = Position::all();
-        return view('', compact('positions'));
-    }
 
     public function create()
     {
-        return view('');
+        return view('page-branch.create-position');
     }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -26,7 +20,7 @@ class PositionController extends Controller
         ]);
 
         Position::create($validated);
-        return redirect()->route('positions.index')->with('success', 'Position created successfully.');
+        return redirect()->back();
     }
 
     public function show(Position $position)
@@ -47,12 +41,12 @@ class PositionController extends Controller
         ]);
 
         $position->update($validated);
-        return redirect()->route('positions.index')->with('success', 'Position updated successfully.');
+        return redirect()->back();
     }
 
     public function destroy(Position $position)
     {
         $position->delete();
-        return redirect()->route('positions.index')->with('success', 'Position deleted successfully.');
+        return redirect()->back();
     }
 }

@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('karyawan_id');
-            $table->string('bulan', 10);
-            $table->decimal('gaji_pokok', 10, 2);
-            $table->decimal('tunjangan', 10, 2)->default(0);
-            $table->decimal('potongan', 10, 2)->default(0);
-            $table->decimal('total_gaji', 10, 2);
+            $table->date('tanggal');
+            $table->time('waktu_masuk')->nullable();
+            $table->time('waktu_keluar')->nullable();
+            $table->enum('status_absensi', ['hadir', 'izin', 'sakit', 'alpha']);
             $table->timestamps();
-
-            // Relasi ke tabel employees
+            // Foreign key constraint
             $table->foreign('karyawan_id')
                 ->references('id')
                 ->on('employees')

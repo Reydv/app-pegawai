@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Position;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
     public function index()
     {
+        $positions = Position::all();
         $departments = Department::all();
-        return view('departments.index', compact('departments'));
+        return view('page-branch.dept', compact('departments', 'positions'));
     }
 
     public function create()
     {
-        return view('');
+        return view('page-branch.dept');
     }
 
     public function store(Request $request)
@@ -25,7 +27,7 @@ class DepartmentController extends Controller
         ]);
 
         Department::create($validated);
-        return redirect()->route('')->with("Department {$validated['nama_departemen']} berhasil ditambahkan.");
+        return redirect()->back();
     }
 
     public function show(Department $department)
@@ -46,7 +48,7 @@ class DepartmentController extends Controller
         ]);
 
         $department->update($validated);
-        return redirect()->route('')->with('success', "Department {$department->nama_departemen} berhasil diupdate.");
+        return redirect()->back();
     }
 
     public function destroy(Department $department)
